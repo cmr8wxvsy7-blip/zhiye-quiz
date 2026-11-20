@@ -107,7 +107,10 @@ export function HomePage({
     >
       <header className="home-toolbar">
         <div>
-          <p className="page-kicker">{todayLabel()}</p>
+          <p className="page-kicker home-kicker">
+            <strong>Cerces</strong>
+            <span>{todayLabel()}</span>
+          </p>
           <h1>今日练习</h1>
           <p className="page-lead">继续当前题库，或者开始一轮新的练习。</p>
         </div>

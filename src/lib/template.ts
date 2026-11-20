@@ -99,7 +99,7 @@ export async function downloadExcelTemplate(): Promise<void> {
     new Blob([buffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     }),
-    "知页题库导入模板.xlsx",
+    "Cerces题库导入模板.xlsx",
   );
 }
 
@@ -113,7 +113,7 @@ export async function downloadWordTemplate(): Promise<void> {
         properties: {},
         children: [
           new Paragraph({
-            text: "知页题库 Word 导入模板",
+            text: "Cerces 题库 Word 导入模板",
             heading: HeadingLevel.TITLE,
           }),
           new Paragraph({
@@ -152,7 +152,7 @@ export async function downloadWordTemplate(): Promise<void> {
     ],
   });
   const blob = await Packer.toBlob(document);
-  triggerDownload(blob, "知页题库导入模板.docx");
+  triggerDownload(blob, "Cerces题库导入模板.docx");
 }
 
 export async function exportBankToExcel(bank: QuestionBank): Promise<void> {
@@ -196,6 +196,6 @@ export function downloadJsonBackup(data: unknown): void {
     new Blob([JSON.stringify(data, null, 2)], {
       type: "application/json;charset=utf-8",
     }),
-    `知页备份-${new Date().toISOString().slice(0, 10)}.json`,
+    `Cerces备份-${new Date().toISOString().slice(0, 10)}.json`,
   );
 }

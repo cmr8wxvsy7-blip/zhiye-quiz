@@ -284,6 +284,13 @@ export function PracticePage({
                 </span>
               </div>
             </div>
+            {currentQuestion.type !== "text" && (
+              <p className="selection-cue">
+                {currentQuestion.type === "single"
+                  ? "请选择 1 项"
+                  : "请选择所有正确选项"}
+              </p>
+            )}
 
             <h1 className="question-stem">{currentQuestion.stem}</h1>
 
@@ -305,6 +312,12 @@ export function PracticePage({
                         isCorrect ? "is-correct" : ""
                       } ${isWrong ? "is-wrong" : ""}`}
                       disabled={submitted}
+                      role={
+                        currentQuestion.type === "multiple"
+                          ? "checkbox"
+                          : "radio"
+                      }
+                      aria-checked={isSelected}
                       initial={
                         reduceMotion ? false : { opacity: 0, y: 8, scale: 0.995 }
                       }
@@ -334,6 +347,10 @@ export function PracticePage({
                           <Check size={17} strokeWidth={2.2} />
                         ) : isWrong ? (
                           <X size={17} strokeWidth={2.2} />
+                        ) : isSelected ? (
+                          <span className="selected-check">
+                            <Check size={14} strokeWidth={2.8} />
+                          </span>
                         ) : (
                           <span
                             className={`choice-indicator choice-indicator--${currentQuestion.type}`}

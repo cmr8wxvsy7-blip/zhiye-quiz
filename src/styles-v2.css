@@ -2565,3 +2565,152 @@ html[data-theme="light"] .summary-detail {
     linear-gradient(145deg, rgba(255, 255, 255, 0.64), rgba(249, 250, 253, 0.28)),
     rgba(255, 255, 255, 0.2);
 }
+
+/* Cerces readability pass */
+.home-kicker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.home-kicker strong {
+  color: var(--accent);
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-kicker span {
+  color: var(--muted);
+}
+
+.selection-cue {
+  margin: -9px 0 13px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.question-meta .type-badge {
+  min-height: 23px;
+  padding-inline: 8px;
+  font-size: 10.5px;
+}
+
+.question-meta .difficulty-label {
+  font-size: 10px;
+}
+
+.question-stem {
+  font-size: 23px;
+  line-height: 1.62;
+}
+
+.option-row {
+  min-height: 64px;
+  padding: 12px 14px;
+}
+
+.option-row.is-selected {
+  box-shadow:
+    inset 3px 0 0 var(--accent),
+    0 0 0 1px rgba(167, 196, 255, 0.05) inset;
+}
+
+.option-row.is-correct {
+  box-shadow:
+    inset 3px 0 0 var(--green),
+    0 0 0 1px rgba(104, 230, 173, 0.04) inset;
+}
+
+.option-row.is-wrong {
+  box-shadow:
+    inset 3px 0 0 var(--red),
+    0 0 0 1px rgba(255, 125, 141, 0.04) inset;
+}
+
+.option-letter {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.option-text {
+  color: #edf3fd;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.58;
+}
+
+.option-state {
+  color: #8994a7;
+}
+
+.choice-indicator {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  border-color: #8e9aae;
+}
+
+.choice-indicator--multiple {
+  border-radius: 5px;
+}
+
+.selected-check {
+  display: grid;
+  width: 21px;
+  height: 21px;
+  color: #08101f;
+  background: var(--accent);
+  border-radius: 50%;
+  place-items: center;
+}
+
+html[data-theme="light"] .option-row {
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.82), rgba(248, 249, 252, 0.54)),
+    rgba(255, 255, 255, 0.35);
+  border-color: rgba(42, 50, 70, 0.1);
+}
+
+html[data-theme="light"] .option-text {
+  color: #181c24;
+  font-weight: 500;
+}
+
+html[data-theme="light"] .option-state {
+  color: #747b88;
+}
+
+html[data-theme="light"] .choice-indicator {
+  border-color: #717886;
+}
+
+html[data-theme="light"] .selected-check {
+  color: #fff;
+  background: #4f6fc8;
+}
+
+html[data-theme="light"] .option-row.is-selected {
+  background:
+    linear-gradient(140deg, rgba(241, 246, 255, 0.94), rgba(231, 239, 255, 0.72)),
+    rgba(91, 121, 209, 0.08);
+  border-color: rgba(70, 100, 192, 0.36);
+}
+
+html[data-theme="light"] .option-row.is-correct {
+  background: rgba(40, 168, 111, 0.11);
+  border-color: rgba(40, 168, 111, 0.3);
+}
+
+html[data-theme="light"] .option-row.is-wrong {
+  background: rgba(217, 78, 97, 0.09);
+  border-color: rgba(217, 78, 97, 0.25);
+}
+
+html[data-theme="light"] .selection-cue {
+  color: #737985;
+}

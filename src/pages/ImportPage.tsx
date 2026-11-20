@@ -73,7 +73,7 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
         !Array.isArray(parsed.banks) ||
         !Array.isArray(parsed.attempts)
       ) {
-        throw new Error("这不是有效的知页备份文件。");
+        throw new Error("这不是有效的 Cerces 备份文件。");
       }
       const confirmed = window.confirm(
         "恢复备份会覆盖当前浏览器中的题库和练习进度。是否继续？",
@@ -406,7 +406,7 @@ B. 后进先出
         <div>
           <p className="page-kicker">迁移设备</p>
           <h2>恢复数据备份</h2>
-          <p>导入知页导出的 JSON 文件，恢复题库、提示和练习进度。</p>
+          <p>导入 Cerces 导出的 JSON 文件，恢复题库、提示和练习进度。</p>
         </div>
         <input
           ref={backupInputRef}

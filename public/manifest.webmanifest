@@ -1,6 +1,6 @@
 {
-  "name": "知页刷题",
-  "short_name": "知页",
+  "name": "Cerces",
+  "short_name": "Cerces",
   "description": "支持 Excel、Word、PDF 导入和直接答案提示的本地刷题工具。",
   "lang": "zh-CN",
   "start_url": "./",

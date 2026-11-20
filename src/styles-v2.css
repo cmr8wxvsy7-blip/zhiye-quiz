@@ -939,7 +939,17 @@ textarea:focus-visible {
 .import-help,
 .restore-section {
   padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
   border-radius: 18px;
+}
+
+.import-help {
+  margin-top: 28px;
+  margin-bottom: 0;
+}
+
+.restore-section {
+  margin-top: 14px;
 }
 
 .import-help code,

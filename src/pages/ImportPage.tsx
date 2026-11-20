@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
+import { dedupeQuestions } from "../lib/dedupe";
 import { parseQuestionFile } from "../lib/importers";
 import {
   downloadExcelTemplate,
@@ -23,6 +24,7 @@ import type { AppData, ImportResult, Question } from "../types";
 import { TypeBadge } from "../components/TypeBadge";
 
 interface ImportPageProps {
+  existingQuestions: Question[];
   onBack: () => void;
   onImport: (title: string, questions: Question[]) => void;
   onRestore: (data: AppData) => void;
@@ -30,7 +32,12 @@ interface ImportPageProps {
 
 type ImportTab = "excel" | "word" | "pdf";
 
-export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
+export function ImportPage({
+  existingQuestions,
+  onBack,
+  onImport,
+  onRestore,
+}: ImportPageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const backupInputRef = useRef<HTMLInputElement>(null);
   const [tab, setTab] = useState<ImportTab>("excel");
@@ -41,6 +48,11 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
   const [bankTitle, setBankTitle] = useState("");
   const [error, setError] = useState("");
   const [isImporting, setIsImporting] = useState(false);
+  const [recognizedCount, setRecognizedCount] = useState(0);
+  const [duplicateCounts, setDuplicateCounts] = useState({
+    inFile: 0,
+    inLibrary: 0,
+  });
   const importingRef = useRef(false);
 
   const accept = tab === "excel" ? ".xlsx" : tab === "word" ? ".docx" : ".pdf";
@@ -49,12 +61,20 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
     if (!file) return;
     setError("");
     setResult(null);
+    setRecognizedCount(0);
+    setDuplicateCounts({ inFile: 0, inLibrary: 0 });
     setIsParsing(true);
     setFilename(file.name);
-    setBankTitle(file.name.replace(/\.(xlsx|docx)$/i, ""));
+    setBankTitle(file.name.replace(/\.(xlsx|docx|pdf)$/i, ""));
     try {
       const parsed = await parseQuestionFile(file);
-      setResult(parsed);
+      const deduped = dedupeQuestions(parsed.questions, existingQuestions);
+      setRecognizedCount(parsed.questions.length);
+      setDuplicateCounts({
+        inFile: deduped.duplicatesInFile,
+        inLibrary: deduped.duplicatesInLibrary,
+      });
+      setResult({ ...parsed, questions: deduped.questions });
     } catch (reason) {
       setError(
         reason instanceof Error ? reason.message : "文件解析失败，请检查格式。",
@@ -92,6 +112,9 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
     setIsImporting(true);
     onImport(bankTitle.trim() || "未命名题库", result.questions);
   }
+
+  const totalDuplicates =
+    duplicateCounts.inFile + duplicateCounts.inLibrary;
 
   return (
     <motion.div
@@ -236,10 +259,17 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
                 <div>
                   <strong>{filename}</strong>
                   <small>
-                    识别 {result.questions.length} 道题
-                    {result.issues.length
-                      ? `，${result.issues.length} 条提示`
-                      : "，没有发现问题"}
+                    {totalDuplicates > 0
+                      ? `读取 ${recognizedCount} 道题，自动排除 ${totalDuplicates} 道重复题，可导入 ${result.questions.length} 道${
+                          result.issues.length
+                            ? `，${result.issues.length} 条提示`
+                            : ""
+                        }`
+                      : `识别 ${result.questions.length} 道题${
+                          result.issues.length
+                            ? `，${result.issues.length} 条提示`
+                            : "，没有发现问题"
+                        }`}
                   </small>
                 </div>
               </div>
@@ -254,6 +284,19 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
                 换一个文件
               </button>
             </div>
+
+            {totalDuplicates > 0 && (
+              <div className="duplicate-note">
+                <CheckCircle2 size={16} strokeWidth={1.8} />
+                <div>
+                  <strong>已自动排除重复题</strong>
+                  <span>
+                    文件内重复 {duplicateCounts.inFile} 道 · 已有题库中重复{" "}
+                    {duplicateCounts.inLibrary} 道
+                  </span>
+                </div>
+              </div>
+            )}
 
             {result.issues.length > 0 && (
               <div className="issue-list">
@@ -336,6 +379,13 @@ export function ImportPage({ onBack, onImport, onRestore }: ImportPageProps) {
                   </button>
                 </div>
               </>
+            )}
+
+            {result.questions.length === 0 && totalDuplicates > 0 && (
+              <div className="duplicate-empty">
+                <strong>没有可导入的新题</strong>
+                <p>文件中的题目都能在文件内部或现有题库中找到。</p>
+              </div>
             )}
           </motion.section>
         )}

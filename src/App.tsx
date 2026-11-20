@@ -353,6 +353,7 @@ export default function App() {
           {view === "import" && (
             <ImportPage
               key="import"
+              existingQuestions={data.banks.flatMap((bank) => bank.questions)}
               onBack={() => setView("home")}
               onImport={importQuestions}
               onRestore={restoreBackup}

@@ -863,6 +863,61 @@ textarea:focus-visible {
   color: #e8c38b;
 }
 
+.duplicate-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 16px;
+  padding: 12px 14px;
+  color: #8ee6bb;
+  background: rgba(104, 230, 173, 0.075);
+  border: 1px solid rgba(104, 230, 173, 0.13);
+  border-radius: 11px;
+}
+
+.duplicate-note > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.duplicate-note strong,
+.duplicate-note span {
+  display: block;
+}
+
+.duplicate-note strong {
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.duplicate-note span {
+  margin-top: 3px;
+  color: #7f9d8d;
+  font-size: 9.5px;
+}
+
+.duplicate-empty {
+  margin-top: 18px;
+  padding: 22px;
+  color: #aeb8c9;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
+}
+
+.duplicate-empty strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.duplicate-empty p {
+  margin: 6px 0 0;
+  color: #788497;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
 .preview-section,
 .import-help,
 .restore-section {
@@ -2120,6 +2175,26 @@ html[data-theme="light"] .pdf-format-guide span {
 
 html[data-theme="light"] .pdf-format-guide strong {
   color: #3f4f72;
+}
+
+html[data-theme="light"] .duplicate-note {
+  color: #287f59;
+  background: rgba(40, 168, 111, 0.075);
+  border-color: rgba(40, 168, 111, 0.13);
+}
+
+html[data-theme="light"] .duplicate-note span {
+  color: #5f846f;
+}
+
+html[data-theme="light"] .duplicate-empty {
+  color: #4d5668;
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(21, 24, 32, 0.07);
+}
+
+html[data-theme="light"] .duplicate-empty p {
+  color: #737985;
 }
 
 html[data-theme="light"] .practice-header {
